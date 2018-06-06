@@ -8,7 +8,7 @@ class Node {
     this.fScore = -1
   }
 
-  heuristicCalcu(to_x, to_y) {
+  heuristicCalc(to_x, to_y) {
     return Math.floor(Math.abs(to_x - this.x) + Math.abs(to_y - this.y))
   }
 
@@ -19,10 +19,30 @@ class Node {
     return Math.hypot(dx, dy)
   }
 
-  static isInBoard(currNode, i, j) {
-    if (this.board[currNode.y + i][currNode.x + j].snake) {
+  static isInBound(board, currNode, i, j) {
+    if (
+      currNode.x + j < 0 ||
+      currNode.x + j > ROWS - 1 ||
+      currNode.y + i < 0 ||
+      currNode.y + i > COLS - 1
+    ) {
       return false
     }
+
+    if (board[currNode.y + i][currNode.x + j].block) {
+      return false
+    }
+
+    if (
+      (currNode.y + i == currNode.y && currNode.x + j == currNode.x) ||
+      (i == -1 && j == -1) ||
+      (i == -1 && j == 1) ||
+      (i == 1 && j == -1) ||
+      (i == 1 && j == 1)
+    ) {
+      return false
+    }
+
     return true
   }
 }
