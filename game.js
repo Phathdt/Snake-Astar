@@ -34,7 +34,7 @@ class Game {
           if (y == this.rabbit.y && x == this.rabbit.x) {
             this.ctx.fillStyle = 'red'
           } else if (this.board[y][x].snake) {
-            this.ctx.fillStyle = 'white'
+            this.ctx.fillStyle = '#1F1F1F'
           } else {
             this.ctx.strokeStyle = '#5F5B6B'
             this.ctx.lineWidth = '1'
