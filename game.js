@@ -32,9 +32,9 @@ class Game {
       for (var x = 0; x < this.COLS; ++x) {
         for (var y = 0; y < this.ROWS; ++y) {
           if (y == this.rabbit.y && x == this.rabbit.x) {
-            this.ctx.fillStyle = 'red'
+            this.ctx.fillStyle = '#FFFFFF'
           } else if (this.board[y][x].snake) {
-            this.ctx.fillStyle = '#1F1F1F'
+            this.ctx.fillStyle = '#000000'
           } else {
             this.ctx.strokeStyle = '#5F5B6B'
             this.ctx.lineWidth = '1'
