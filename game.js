@@ -10,11 +10,21 @@ class Game {
     this.BLOCK_H = this.HEIGHT / this.COLS
     this.gameOver = false
 
+    this.board = new Board(this.ROWS, this.COLS).buildBoard()
+
+    this.snake = new Array()
+    this.snake.push(
+      this.board[Math.floor(this.ROWS / 2)][Math.floor(this.COLS / 2)]
+    )
+
+    this.board[Math.floor(this.ROWS / 2)][
+      Math.floor(this.COLS / 2)
+    ].snake = true
+
     this.rabbit = new Node(
       Math.floor(Math.random() * this.COLS),
       Math.floor(Math.random() * this.ROWS)
     )
-    this.board = new Board(this.ROWS, this.COLS).buildBoard()
   }
 
   draw() {
@@ -23,7 +33,7 @@ class Game {
         for (var y = 0; y < this.ROWS; ++y) {
           if (y == this.rabbit.y && x == this.rabbit.x) {
             this.ctx.fillStyle = 'red'
-          } else if (this.board[y][x].block) {
+          } else if (this.board[y][x].snake) {
             this.ctx.fillStyle = 'white'
           } else {
             this.ctx.strokeStyle = '#5F5B6B'

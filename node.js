@@ -1,6 +1,6 @@
 class Node {
   constructor(x, y) {
-    this.block = false
+    this.snake = false
     this.x = x
     this.y = y
     this.parent = null
@@ -20,7 +20,7 @@ class Node {
   }
 
   static isInBoard(currNode, i, j) {
-    if (this.board[currNode.y + i][currNode.x + j].block) {
+    if (this.board[currNode.y + i][currNode.x + j].snake) {
       return false
     }
     return true
