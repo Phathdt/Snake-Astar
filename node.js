@@ -12,13 +12,6 @@ class Node {
     return Math.floor(Math.abs(to_x - this.x) + Math.abs(to_y - this.y))
   }
 
-  static fScoreSort(FromNode, ToNode) {
-    let dx = FromNode.x - ToNode.x
-    let dy = FromNode.y - ToNode.y
-
-    return Math.hypot(dx, dy)
-  }
-
   static isInBound(board, currNode, i, j) {
     if (
       currNode.x + j < 0 ||

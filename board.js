@@ -21,7 +21,6 @@ class Board {
     }
 
     this.board = board
-
     return this.board
   }
 }

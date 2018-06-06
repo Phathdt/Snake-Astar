@@ -1,7 +1,7 @@
 const WIDTH = 800
 const HEIGHT = 800
-const ROWS = 5
-const COLS = 5
+const ROWS = 40
+const COLS = 40
 const BLOCK_W = WIDTH / ROWS
 const BLOCK_H = HEIGHT / COLS
 
@@ -247,9 +247,7 @@ class Game {
   startGame() {
     this.draw()
 
-    while (!this.gameOver) {
-      setInterval(this.tick(), 50)
-      setInterval(this.draw(), 50)
-    }
+    setInterval(this.tick(), 50)
+    setInterval(this.draw(), 50)
   }
 }
