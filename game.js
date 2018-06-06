@@ -1,6 +1,7 @@
 class Game {
   constructor() {
     this.ctx = document.getElementById('game-canvas').getContext('2d')
+
     this.WIDTH = 800
     this.HEIGHT = 800
     this.ROWS = 40
@@ -8,8 +9,11 @@ class Game {
     this.BLOCK_W = this.WIDTH / this.ROWS
     this.BLOCK_H = this.HEIGHT / this.COLS
     this.gameOver = false
-    this.item_x = Math.floor(Math.random() * this.ROWS)
-    this.item_x = Math.floor(Math.random() * this.COLS)
+
+    this.rabbit = new Node(
+      Math.floor(Math.random() * this.COLS),
+      Math.floor(Math.random() * this.ROWS)
+    )
     this.board = new Board(this.ROWS, this.COLS).buildBoard()
   }
 
@@ -17,14 +21,14 @@ class Game {
     if (!this.gameOver) {
       for (var x = 0; x < this.COLS; ++x) {
         for (var y = 0; y < this.ROWS; ++y) {
-          if (y == this.item_y && x == this.item_x) {
+          if (y == this.rabbit.y && x == this.rabbit.x) {
             this.ctx.fillStyle = 'red'
           } else if (this.board[y][x].block) {
             this.ctx.fillStyle = 'white'
           } else {
-            this.ctx.strokeStyle = 'black'
-            this.ctx.lineWidth = '0.8'
-            this.ctx.fillStyle = 'red'
+            this.ctx.strokeStyle = '#5F5B6B'
+            this.ctx.lineWidth = '1'
+            this.ctx.fillStyle = '#757180'
           }
           this.ctx.fillRect(
             this.BLOCK_W * x,
