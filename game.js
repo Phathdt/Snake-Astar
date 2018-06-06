@@ -1,7 +1,7 @@
 const WIDTH = 800
 const HEIGHT = 800
-const ROWS = 40
-const COLS = 40
+const ROWS = 5
+const COLS = 5
 const BLOCK_W = WIDTH / ROWS
 const BLOCK_H = HEIGHT / COLS
 
@@ -56,7 +56,11 @@ class Game {
     ].heuristicCalc(this.rabbit.x, this.rabbit.y)
 
     while (openSet.length > 0) {
-      openSet.sort(fScoreSort)
+      openSet.sort(function(a, b) {
+        if (a.fScore < b.fScore) return -1
+        if (a.fScore > b.fScore) return 1
+        return 0
+      })
 
       let currNode = openSet[0]
       if (currNode.x == this.rabbit.x && currNode.y == this.rabbit.y) {
@@ -179,13 +183,14 @@ class Game {
 
           return numOfNodes
         }
-        currNode.block = true
+        currNode.snake = true
       }
     }
   }
 
   tick() {
     let tail
+    var nextLoc
     if (!this.gameOver) {
       var path = this.Astar()
       console.log(path)
@@ -219,14 +224,14 @@ class Game {
 
       // set next location
       this.snake.unshift(nextLoc)
-      nextLoc.block = true
+      nextLoc.snake = true
       this.start_x = nextLoc.x
       this.start_y = nextLoc.y
 
       // if not at the item, pop the tail
       if (!(nextLoc.x == this.rabbit.x && nextLoc.y == this.rabbit.y)) {
         tail = this.snake.pop()
-        tail.block = false
+        tail.snake = false
         tail.gScore = -1
         tail.fScore = -1
       } else {
@@ -234,7 +239,7 @@ class Game {
         do {
           this.rabbit.x = Math.floor(Math.random() * ROWS)
           this.rabbit.y = Math.floor(Math.random() * COLS)
-        } while (this.board[this.rabbit.y][this.rabbit.x].block == true)
+        } while (this.board[this.rabbit.y][this.rabbit.x].snake == true)
       }
     }
   }
@@ -242,13 +247,9 @@ class Game {
   startGame() {
     this.draw()
 
-    setInterval(this.tick(), 50)
-    setInterval(this.draw(), 50)
+    while (!this.gameOver) {
+      setInterval(this.tick(), 50)
+      setInterval(this.draw(), 50)
+    }
   }
-}
-
-function fScoreSort(a, b) {
-  if (a.fScore < b.fScore) return -1
-  if (a.fScore > b.fScore) return 1
-  return 0
 }
