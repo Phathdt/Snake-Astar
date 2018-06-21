@@ -96,7 +96,6 @@ class Game {
         }
       }
     }
-    console.log(1)
   }
 
   reconstruct_path(currNode, start_x, start_y) {
@@ -193,8 +192,6 @@ class Game {
     var nextLoc
     if (!this.gameOver) {
       var path = this.Astar()
-      console.log(path)
-
       for (var j = 0; j < path.length - 1; j++) {
         path[j].parent = null
         path[j].gScore = -1
@@ -215,7 +212,6 @@ class Game {
         var nextNode = getNextMove(item_x, item_y)
         if (nextNode == null) {
           this.gameOver = true
-          console.log('GAME OVER')
           return
         } else {
           nextLoc = nextNode
@@ -244,10 +240,19 @@ class Game {
     }
   }
 
-  startGame() {
-    this.draw()
+  delay() {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, 50)
+    })
+  }
 
-    setInterval(this.tick(), 50)
-    setInterval(this.draw(), 50)
+  async startGame() {
+    this.draw()
+    var _this = this
+    for (var i = 0; i < 10000; i++) {
+      await _this.delay()
+      _this.tick()
+      _this.draw()
+    }
   }
 }
