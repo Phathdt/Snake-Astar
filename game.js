@@ -242,7 +242,7 @@ class Game {
 
   delay() {
     return new Promise((resolve, reject) => {
-      setTimeout(resolve, 50)
+      setTimeout(resolve, 100)
     })
   }
 
