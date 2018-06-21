@@ -101,7 +101,6 @@ class Game {
   reconstruct_path(currNode, start_x, start_y) {
     let totalPath = [currNode]
 
-    // go through the parents to find how the route
     while (currNode.parent != null) {
       totalPath.push(currNode.parent)
       currNode = currNode.parent
@@ -110,7 +109,7 @@ class Game {
     return totalPath
   }
 
-  getNextMove(end_x, end_y) {
+  getNextMove() {
     let nextLoc
     let lowestfScore = -1
     let lowestfScoreNode = null
@@ -123,14 +122,12 @@ class Game {
 
         let neighbour = this.board[this.snake[0].y + i][this.snake[0].x + j]
 
-        // pathScore = fScore + pathLength
         var pathScore =
           neighbour.gScore +
-          neighbour.heuristicCalc(end_x, end_y) +
+          neighbour.heuristicCalc(this.rabbit.x, this.rabbit.y) +
           pathLength(neighbour) +
           1
 
-        // find the largest pathScore
         if (pathScore > lowestfScore) {
           lowestfScore = pathScore
           lowestfScoreNode = neighbour
@@ -153,14 +150,12 @@ class Game {
 
         currNode = this.board[currNode.y + i][currNode.x + j]
 
-        // increment the number of nodes and reset the check to looking at the top node
         numOfNodes++
         i = -1
         j = -1
 
         longestPathArray.push(currNode)
 
-        // check if no where else to go
         if (
           (!(currNode.x + 1 >= 0 && currNode.x + 1 < COLS) ||
             this.board[currNode.y][currNode.x + 1] == undefined ||
@@ -209,7 +204,7 @@ class Game {
       if (path) {
         var nextLoc = path[path.length - 2]
       } else {
-        var nextNode = getNextMove(item_x, item_y)
+        var nextNode = getNextMove()
         if (nextNode == null) {
           this.gameOver = true
           return
@@ -224,14 +219,12 @@ class Game {
       this.start_x = nextLoc.x
       this.start_y = nextLoc.y
 
-      // if not at the item, pop the tail
       if (!(nextLoc.x == this.rabbit.x && nextLoc.y == this.rabbit.y)) {
         tail = this.snake.pop()
         tail.snake = false
         tail.gScore = -1
         tail.fScore = -1
       } else {
-        // if at the item, set a new item location
         do {
           this.rabbit.x = Math.floor(Math.random() * ROWS)
           this.rabbit.y = Math.floor(Math.random() * COLS)
